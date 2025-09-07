@@ -31,8 +31,7 @@ async def leaderboard(message):
     leaderboard = "".join(f"{data[top]['rank']}  {data[top]['userName'][:20]}"
                           + f"  {data[top]['score']}\n" for top in tops)
     result = "```\n" + leaderboard + "```"
-    await reply(ctx, result)
-    await bot.reply_to(message, text)
+    await bot.reply_to(message, result)
 
 
 async def sget(url):
