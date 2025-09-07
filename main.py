@@ -6,7 +6,7 @@ from asyncio import run
 from os import environ
 from telebot.async_telebot import AsyncTeleBot
 
-bot = AsyncTeleBot('TOKEN')
+bot = AsyncTeleBot(environ['TOKEN'])
 
 
 # Handle '/start' and '/help'
