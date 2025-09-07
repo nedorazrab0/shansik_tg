@@ -13,19 +13,13 @@ bot = AsyncTeleBot(environ['TOKEN'])
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
-async def send_welcome(message):
-    async def leaderboard(
-    ctx: Interaction,
-    page: int = SlashOption(choices=[1, 2], description="page = 50 tiers"),
-    region: str = SlashOption(choices=["en", "kr", "jp", "tw", "cn"]),
-    wl: bool = SlashOption(choices=[True, False]),
-):
-    if wl:
+async def leaderboard(message, page, region, wl):
+    if wl == "wl":
         type = "live_latest_chapter"
     else:
         type = "live"
     url = f"https://api.sekai.best/event/{type}?region={region}"
-    if page == 1:
+    if page == "1":
         tops = range(0, 51)
     elif page == 2:
         tops = range(50, 103)
