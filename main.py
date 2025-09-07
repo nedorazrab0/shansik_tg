@@ -23,7 +23,7 @@ async def leaderboard(message):
     url = f"https://api.sekai.best/event/{type}?region={region}"
     if args[1] == "1":
         tops = range(0, 51)
-    elif page == 2:
+    elif args[1] == "2":
         tops = range(50, 103)
     raw = await sget(url)
     json = loads(raw)
