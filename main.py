@@ -13,13 +13,15 @@ bot = AsyncTeleBot(environ['TOKEN'])
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
-async def leaderboard(message, page, region, wl):
-    if wl == "wl":
+async def leaderboard(message):
+    args = message.text.split()
+    if args[0] == "wl":
         type = "live_latest_chapter"
     else:
         type = "live"
+    region = args[2]
     url = f"https://api.sekai.best/event/{type}?region={region}"
-    if page == "1":
+    if args[1] == "1":
         tops = range(0, 51)
     elif page == 2:
         tops = range(50, 103)
