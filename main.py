@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+#
+# pjsk bot
 
-# This is a simple echo bot using the decorator mechanism.
-# It echoes any incoming text messages.
 from asyncio import run
 from os import environ
 from telebot.async_telebot import AsyncTeleBot
@@ -10,29 +10,30 @@ from orjson import loads
 
 bot = AsyncTeleBot(environ['TOKEN'])
 
-
-# Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=["b"])
 async def leaderboard(message):
     args = message.text.split()
-    if args[1] == "wl":
+    evtype = args[1]
+    page = args[2]
+    region = args[3]
+    if evtype == "wl":
         type = "live_latest_chapter"
-    else:
+    elif evtype == "t":
         type = "live"
-    region = args[2]
     url = f"https://api.sekai.best/event/{type}?region={region}"
-    if args[3] == "1":
+    if page == "1":
         tops = range(0, 51)
-    elif args[1] == "2":
+    elif page == "2":
         tops = range(50, 103)
     raw = await sget(url)
     json = loads(raw)
     data = json["data"]["eventRankings"]
-    leaderboard = "".join(f"{data[top]['rank']}  {data[top]['userName'][:20]}"
-                          + f"  {data[top]['score']}\n" for top in tops)
-    result = "```\n" + leaderboard + "```"
-    await bot.reply_to(message, result)
+    result = "".join(f"{data[top]['rank']}  {data[top]['userName'][:20]}"
+                     + f"  {data[top]['score']}\n" for top in tops)
+    await reply(message, result)
 
+async def reply(message, result):
+    await bot.reply_to(message, result)
 
 async def sget(url):
     headers = ({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
@@ -41,11 +42,5 @@ async def sget(url):
     async with ClientSession() as s:
         async with s.get(url, headers=headers) as resp:
             return await resp.text()
-
-# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
-@bot.message_handler(func=lambda message: True)
-async def echo_message(message):
-    await bot.reply_to(message, message.text)
-
 
 run(bot.infinity_polling())
