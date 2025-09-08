@@ -8,7 +8,7 @@ from telebot.async_telebot import AsyncTeleBot
 from aiohttp import ClientSession
 from orjson import loads
 
-bot = AsyncTeleBot(environ['TOKEN'])
+bot = AsyncTeleBot(environ["TOKEN"])
 
 @bot.message_handler(commands=["b"])
 async def leaderboard(message):
