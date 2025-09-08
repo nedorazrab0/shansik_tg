@@ -10,6 +10,11 @@ from orjson import loads
 
 bot = AsyncTeleBot(environ["TOKEN"])
 
+@bot.message_handler(commands=["a"])
+async def hui(message):
+    hui = str(message)
+    await reply(message, hui)
+
 @bot.message_handler(commands=["b"])
 async def leaderboard(message):
     args = message.text.split()
