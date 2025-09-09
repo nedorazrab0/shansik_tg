@@ -18,7 +18,7 @@ async def leaderboard(message):
     page = args[3]
     if evtype == "wl":
         type = "live_latest_chapter"
-    elif evtype == "t":
+    elif evtype == "nowl":
         type = "live"
     url = f"https://api.sekai.best/event/{type}?region={region}"
     if page == "1":
