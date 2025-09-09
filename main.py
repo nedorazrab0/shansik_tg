@@ -13,9 +13,9 @@ bot = AsyncTeleBot(environ["TOKEN"])
 @bot.message_handler(commands=["b"])
 async def leaderboard(message):
     args = message.text.split()
-    evtype = args[1]
-    page = args[2]
-    region = args[3]
+    region = args[1]
+    evtype = args[2]
+    page = args[3]
     if evtype == "wl":
         type = "live_latest_chapter"
     elif evtype == "t":
